@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//from './logo.svg';
 import './App.css';
 
 class App extends Component
@@ -8,30 +8,33 @@ class App extends Component
   {
     super();
     this.state = {
-      string: 'Hello Ruby'
-    }
+
+      monsters: []
+    };
   }
+
+  componentDidMount()
+  {
+    fetch('http://jsonplaceholder.typicode.com/users').then(response => response.json())
+      .then(users => this.setState({ monsters: users }))
+
+  }
+
   render()
   {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h3>{this.state.string}</h3>
-          <button onClick={() => this.setState({ string: 'Hello Baby Ruby' })}>Click Me</button>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div >
+      <div className='App'>
+        {this.state.monsters.map(monster => (
+          <h1 key={monster.id}>{monster.name}</h1>
+        ))
+        }
+      </div>
     );
-
   }
-
 }
+
+
+
+
+
 export default App;
